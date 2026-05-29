@@ -3,13 +3,11 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install --legacy-peer-deps
+RUN npm install 
 
 COPY . .
-RUN CI=false npm run build
 
 # Stage 2: Serve
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
+
+EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
