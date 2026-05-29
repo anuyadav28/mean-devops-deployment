@@ -2,6 +2,13 @@ In this DevOps task, you need to build and deploy a full-stack CRUD application 
 
 The application will manage a collection of tutorials, where each tutorial includes an ID, title, description, and published status. Users will be able to create, retrieve, update, and delete tutorials. Additionally, a search box will allow users to find tutorials by title.
 
+## My Contribution
+
+* Added Docker support
+* Implemented GitHub Actions CI/CD pipeline
+* Configured AWS EC2 deployment
+
+
 ## Project setup
 
 ### Node.js Server
