@@ -25,10 +25,10 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mean-frontend:latest ./frontend -f Dockerfile .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mean-frontend:latest .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/mean-frontend:latest
 
       - name: Build & Push Backend
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mean-backend:latest ./backend -f Dockerfile.backend
+          docker build -f Dockerfile.backend -t anuy2004/mean-backend:latest .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/mean-backend:latest
