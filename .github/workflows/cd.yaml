@@ -21,3 +21,34 @@ jobs:
             git pull origin main
             docker compose pull
             docker compose up -d
+
+            version: "3.8"
+            services:
+              mongo:
+                image: mongo:6
+                volumes:
+                  - mongo_data:/data/db
+
+              backend:
+                image: anuy2004/mean-backend:latest
+                environment:
+                  - MONGO_URI=mongodb://mongo:27017/mean-db
+                ports:
+                  - "5000:5000"
+                depends_on:
+                  - mongo
+
+              frontend:
+                image: anuy2004/mean-frontend:latest
+                ports:
+                  - "8081:80"
+                depends_on:
+                  - backend
+
+            volumes:
+              mongo_data:
+            EOF
+
+            docker-compose pull
+            docker-compose up -d --force-recreate
+            docker image prune -f
