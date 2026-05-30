@@ -30,7 +30,7 @@ jobs:
                   - mongo_data:/data/db
 
               backend:
-                image: anuy2004/mean-backend:latest
+                image: DOCKERHUB_USERNAME/mean-backend:latest
                 environment:
                   - MONGO_URI=mongodb://mongo:27017/mean-db
                 ports:
@@ -39,7 +39,7 @@ jobs:
                   - mongo
 
               frontend:
-                image: anuy2004/mean-frontend:latest
+                image: DOCKERHUB_USERNAME/mean-frontend:latest
                 ports:
                   - "8081:80"
                 depends_on:
