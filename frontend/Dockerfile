@@ -1,8 +1,8 @@
 # Stage 1: Build
 FROM node:18-alpine AS build
-WORKDIR /app
+WORKDIR /app/frontend
 
-COPY package*.json ./
+COPY frontend/package*.json ./
 RUN npm install
 
 COPY . .
