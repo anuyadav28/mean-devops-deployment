@@ -6,8 +6,11 @@ COPY package*.json ./
 RUN npm install 
 
 COPY . .
+RUN npm run build      
+
 
 # Stage 2: Serve
-
-EXPOSE 3000
+FROM nginx:alpine              
+COPY --from=build /app/dist/your-app-name /usr/share/nginx/html
+EXPOSE 80                      
 CMD ["nginx", "-g", "daemon off;"]
