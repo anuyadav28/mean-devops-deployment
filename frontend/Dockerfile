@@ -3,7 +3,7 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install 
+RUN npm ci
 
 COPY . .
 RUN npm run build   
@@ -11,6 +11,6 @@ RUN npm run build
 
 # Stage 2: Serve
 FROM nginx:alpine              
-COPY --from=build /app/dist/your-app-name /usr/share/nginx/html
+COPY --from=build /app/dist/mean-devops-deployment /usr/share/nginx/html
 EXPOSE 80                      
 CMD ["nginx", "-g", "daemon off;"]
