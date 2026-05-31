@@ -1,9 +1,9 @@
 # Stage 1: Build
 FROM node:18-alpine AS build
-WORKDIR /app/frontend
+WORKDIR /app/
 
 COPY package*.json ./
-RUN npm install
+RUN npm ci --legacy-peer-deps
 
 COPY . .
 RUN npm run build   
