@@ -11,6 +11,6 @@ RUN npm run build
 
 # Stage 2: Serve
 FROM nginx:alpine              
-COPY --from=build /app/dist/mean-devops-deployment /usr/share/nginx/html
+COPY --from=build /app/dist/frontend /usr/share/nginx/html
 EXPOSE 80                      
 CMD ["nginx", "-g", "daemon off;"]
