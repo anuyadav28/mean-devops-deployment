@@ -2,30 +2,35 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 
-# Copy package files
+# Copy root package files
 COPY package*.json ./
-COPY frontend/package*.json ./frontend/
 
-# Install dependencies
+# Copy frontend package files
+COPY frontend/ ./frontend/
+
+# Install root dependencies
 RUN npm ci
-RUN cd frontend && npm ci
 
-# Copy source code
-COPY . .
+# Install frontend dependencies
+WORKDIR /app/frontend
+RUN npm ci
 
-# Build
-RUN cd frontend && npm run build
+# Build frontend
+RUN npm run build
 
 # Production stage
 FROM node:18-alpine
 
 WORKDIR /app
 
+# Copy root package files
 COPY package*.json ./
 
+# Install production dependencies
 RUN npm ci --only=production
 
-COPY --from=build /app/frontend/dist/frontend ./frontend/dist/frontend
+# Copy built frontend from build stage
+COPY --from=build /app/frontend/dist ./frontend/dist
 
 EXPOSE 3000
 
