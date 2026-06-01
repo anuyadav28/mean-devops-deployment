@@ -6,7 +6,8 @@ COPY package*.json ./
 RUN npm install --legacy-peer-deps
 
 COPY . .
-RUN npm run build   
+RUN npm run build --configuration production
+
 
 
 # Stage 2: Serve
