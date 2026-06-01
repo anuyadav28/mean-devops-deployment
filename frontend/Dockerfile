@@ -1,17 +1,32 @@
-# Stage 1: Build
 FROM node:18-alpine AS build
-WORKDIR /app/
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY frontend/package*.json ./frontend/
+
+# Install dependencies
+RUN npm ci
+RUN cd frontend && npm ci
+
+# Copy source code
+COPY . .
+
+# Build
+RUN cd frontend && npm run build
+
+# Production stage
+FROM node:18-alpine
+
+WORKDIR /app
 
 COPY package*.json ./
-RUN npm install --legacy-peer-deps
 
-COPY . .
-RUN npm run build 
+RUN npm ci --only=production
 
+COPY --from=build /app/frontend/dist/frontend ./frontend/dist/frontend
 
+EXPOSE 3000
 
-# Stage 2: Serve
-FROM nginx:alpine              
-COPY --from=build /app/dist/frontend /usr/share/nginx/html
-EXPOSE 80                      
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "server.js"]
